@@ -16,14 +16,11 @@ export function slugify(text) {
     throw new TypeError('slugify expects a string');
   }
 
-  const result = text
+  return text
     .replace(/[ÆæÐðØøÞþẞß]/g, (character) => CHARACTER_REPLACEMENTS[character])
     .normalize('NFKD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
-
-  console.log('slugify output', { text, result });
-  return result;
 }
