@@ -7,11 +7,13 @@ const JSON_HEADERS = {
 const MAX_BODY_SIZE = 10 * 1024;
 
 function sendJson(response, statusCode, payload) {
+  console.log('sendJson output', { statusCode, payload });
   response.writeHead(statusCode, JSON_HEADERS);
   response.end(JSON.stringify(payload));
 }
 
 function sendNoContent(response) {
+  console.log('sendNoContent output', { statusCode: 204 });
   response.writeHead(204);
   response.end();
 }

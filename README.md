@@ -7,6 +7,15 @@ npm start
 npm test
 ```
 
+## Slugify
+
+```js
+import { slugify } from './src/slugify.js';
+
+slugify('Crème Brûlée');
+// "creme-brulee"
+```
+
 ## Endpoints
 
 | Method | Path | Description |
