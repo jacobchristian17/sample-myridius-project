@@ -129,6 +129,18 @@ export function createApp(store) {
     }
 
     if (taskMatch?.type === 'task') {
+      if (method === 'GET') {
+        const task = store.get(taskMatch.id);
+
+        if (!task) {
+          sendJson(response, 404, { error: 'Task not found' });
+          return;
+        }
+
+        sendJson(response, 200, task);
+        return;
+      }
+
       if (method !== 'DELETE') {
         sendJson(response, 405, { error: 'Method not allowed' });
         return;

@@ -114,6 +114,29 @@ test('POST /tasks rejects oversized bodies', async () => {
   assert.deepEqual(await response.json(), { error: 'Request body too large' });
 });
 
+test('GET /tasks/:id returns a task', async () => {
+  const createResponse = await fetch(`${baseUrl}/tasks`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ title: 'Find me' })
+  });
+  const createdTask = await createResponse.json();
+
+  const response = await fetch(`${baseUrl}/tasks/${createdTask.id}`);
+
+  assert.equal(response.status, 200);
+  assert.deepEqual(await response.json(), createdTask);
+});
+
+test('GET /tasks/:id returns 404 for unknown tasks', async () => {
+  const response = await fetch(`${baseUrl}/tasks/unknown-task`);
+
+  assert.equal(response.status, 404);
+  assert.deepEqual(await response.json(), { error: 'Task not found' });
+});
+
 test('PATCH /tasks/:id/complete marks a task complete', async () => {
   const createResponse = await fetch(`${baseUrl}/tasks`, {
     method: 'POST',
@@ -173,7 +196,7 @@ test('known paths reject unsupported methods', async () => {
   const responses = await Promise.all([
     fetch(`${baseUrl}/health`, { method: 'POST' }),
     fetch(`${baseUrl}/tasks`, { method: 'PUT' }),
-    fetch(`${baseUrl}/tasks/some-id`, { method: 'GET' }),
+    fetch(`${baseUrl}/tasks/some-id`, { method: 'PATCH' }),
     fetch(`${baseUrl}/tasks/some-id/complete`, { method: 'DELETE' })
   ]);
 
