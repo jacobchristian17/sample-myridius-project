@@ -11,17 +11,22 @@ export class TaskStore {
   #tasks = new Map();
 
   list() {
-    return Array.from(this.#tasks.values()).sort((left, right) => {
+    const tasks = Array.from(this.#tasks.values()).sort((left, right) => {
       if (left.createdAt === right.createdAt) {
         return left.id.localeCompare(right.id);
       }
 
       return left.createdAt.localeCompare(right.createdAt);
     });
+
+    console.log('TaskStore.list output', tasks);
+    return tasks;
   }
 
   get(id) {
-    return this.#tasks.get(id) ?? null;
+    const task = this.#tasks.get(id) ?? null;
+    console.log('TaskStore.get output', { id, task });
+    return task;
   }
 
   create(title) {
@@ -47,7 +52,7 @@ export class TaskStore {
     };
 
     this.#tasks.set(task.id, task);
-
+    console.log('TaskStore.create output', task);
     return task;
   }
 
@@ -55,14 +60,18 @@ export class TaskStore {
     const task = this.#tasks.get(id);
 
     if (!task) {
+      console.log('TaskStore.complete output', { id, task: null });
       return null;
     }
 
     task.completed = true;
+    console.log('TaskStore.complete output', { id, task });
     return task;
   }
 
   remove(id) {
-    return this.#tasks.delete(id);
+    const removed = this.#tasks.delete(id);
+    console.log('TaskStore.remove output', { id, removed });
+    return removed;
   }
 }
