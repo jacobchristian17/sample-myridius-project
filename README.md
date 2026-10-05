@@ -3,6 +3,8 @@
 ## Running
 
 - `npm start`
+- `PORT=3000 npm start`
+- `PORT=0 npm start` to let the OS choose a free port
 - `npm test`
 
 ## Endpoints
