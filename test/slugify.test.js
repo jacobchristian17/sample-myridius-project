@@ -17,6 +17,10 @@ test('slugify removes accents', () => {
   assert.equal(slugify('Crème Brûlée'), 'creme-brulee');
 });
 
+test('slugify transliterates common latin compatibility letters', () => {
+  assert.equal(slugify('Æther & straße'), 'aether-strasse');
+});
+
 test('slugify returns an empty string for empty or punctuation-only input', () => {
   assert.equal(slugify(''), '');
   assert.equal(slugify('!!!'), '');
